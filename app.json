@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Lelangin",
-    "slug": "Lelangin",
+    "slug": "lelangin",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,6 +22,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "075eb22b-a6fc-4d88-a7c0-56bcffcded70"
+      }
+    },
+    "owner": "neocortex71"
   }
 }
