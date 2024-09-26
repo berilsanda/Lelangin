@@ -20,7 +20,6 @@ export default function HomeNavigator() {
       initialRouteName="Home"
       screenOptions={{
         tabBarShowLabel: false,
-
       }}
     >
       <Stack.Screen
@@ -49,6 +48,8 @@ export default function HomeNavigator() {
           tabBarIcon: ({ color, size }) => (
             <Feather name="plus-square" color={color} size={size} />
           ),
+          headerShown: false,
+          tabBarStyle: { display: "none" },
         }}
       />
       <Stack.Screen
@@ -58,7 +59,7 @@ export default function HomeNavigator() {
           tabBarIcon: ({ color, size }) => (
             <Feather name="user" color={color} size={size} />
           ),
-          headerShown: false
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

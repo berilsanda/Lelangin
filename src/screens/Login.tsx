@@ -22,7 +22,7 @@ export type UserData = {
   email?: string | null;
   emailVerified?: boolean;
   displayName?: string | null;
-  photoUrl?: string | null;
+  photoURL?: string | null;
   uid: string;
 };
 
@@ -74,7 +74,7 @@ export default function Login({ navigation }: Props) {
             marginBottom: 64,
           }}
           resizeMode="contain"
-          source={require("../../assets/logo.png")}
+          source={require("assets/logo.png")}
         />
         <AppTextInputs
           name="email"

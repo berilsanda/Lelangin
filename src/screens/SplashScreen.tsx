@@ -3,11 +3,12 @@ import React, { useEffect } from "react";
 import { colors } from "src/data/globals";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "src/navigations/MainNavigator";
-import { auth } from "src/services/firebase";
+import { auth, getUser } from "src/services/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "src/reduxs/reducer/persistReducer";
 import { onAuthStateChanged } from "firebase/auth";
 import _ from 'lodash';
+import serializeTime from "src/utils/serializeTime";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -18,15 +19,23 @@ export default function SplashScreen({ navigation }: Props) {
   const userData = useSelector((state: any) => state.persist.userData);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        let currentUser = {
+        const userFirestoreData = await getUser(user.uid);
+
+        let currentUser: any = {
+          ...userFirestoreData,
           uid: user.uid,
           email: user.email,
           emailVerified: user.emailVerified,
           displayName: user.displayName,
-          photoUrl: user.photoURL,
+          photoURL: user.photoURL,
         };
+
+        currentUser.createdAt = serializeTime(currentUser.createdAt);
+        currentUser.lastLogin = serializeTime(currentUser.lastLogin);
+        currentUser.updateAt = serializeTime(currentUser.updateAt);
+
         if (!_.isEqual(userData, currentUser)) {
           dispatch(setUser(currentUser));
         }

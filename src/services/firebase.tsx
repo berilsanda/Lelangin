@@ -1,5 +1,13 @@
 import * as firebase from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  DocumentData,
+  getDoc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import {
   initializeAuth,
   getReactNativePersistence,
@@ -15,6 +23,8 @@ import {
   PROJECT_ID,
   STORAGE_BUCKET,
 } from "src/env";
+import uuid from "react-native-uuid";
+import { Alert } from "react-native";
 
 const firebaseConfig = {
   apiKey: API_KEY,
@@ -29,6 +39,7 @@ const app = firebase.initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
+export const storage = getStorage();
 
 export async function UserLogin(email: string, password: string) {
   try {
@@ -57,3 +68,29 @@ export async function UserRegister(email: string, password: string) {
 }
 
 export const database = getFirestore(app);
+
+export const users = collection(database, "user");
+
+export async function createUser(body: any) {
+  try {
+    await setDoc(doc(database, "user", body.uid), body);
+  } catch (error: any) {
+    Alert.alert("Kesalahan", error.message);
+  }
+}
+
+export async function getUser(uid: string): Promise<DocumentData | null> {
+  try {
+    const docRef = doc(database, "user", uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    }
+  } catch (error: any) {
+    Alert.alert("Kesalahan", error.message);
+    return null;
+  }
+
+  return null;
+}

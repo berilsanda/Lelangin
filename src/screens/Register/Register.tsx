@@ -1,28 +1,29 @@
 import {
-  Alert,
-  Dimensions,
-  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  StatusBar as Bar,
+  View,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AppTextInputs, Buttons } from "components/atoms";
 import { colors, size } from "data/globals";
-import { UserRegister } from "src/services/firebase";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "src/navigations/MainNavigator";
 
-type UserData = { email: string; password: string };
-
-const WINDOW_WIDTH = Dimensions.get("window").width;
-const WINDOW_HEIGHT = Dimensions.get("window").height;
+export interface UserRegisterData {
+  displayName: string;
+  email: string;
+  password: string;
+  cpassword: string;
+}
 
 const schema = yup.object().shape({
+  displayName: yup.string().required("Silahkan masukkan nama lengkap anda"),
   email: yup
     .string()
     .email("Format email salah")
@@ -44,45 +45,35 @@ const schema = yup.object().shape({
 type Props = NativeStackScreenProps<StackParamList, "Register">;
 
 export default function Register({ navigation }: Props) {
-  const [loading, setLoading] = useState(false);
-
   const { control, handleSubmit, reset } = useForm({
     resolver: yupResolver(schema),
   });
 
-  async function onSubmit(data: UserData) {
-    setLoading(true);
-    try {
-      await UserRegister(data.email, data.password);
-      reset();
-      navigation.navigate("SplashScreen");
-    } catch (error: any) {
-      Alert.alert("Gagal", error.message);
-    } finally {
-      setLoading(false);
-    }
+  function onSubmit(data: UserRegisterData) {
+    navigation.navigate("UserDetail", data);
+    reset();
   }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        <Image
-          style={{
-            height: 40,
-            width: WINDOW_WIDTH * 0.75,
-            alignSelf: "center",
-            marginTop: WINDOW_HEIGHT * 0.25,
-            marginBottom: 64,
-          }}
-          resizeMode="contain"
-          source={require("../../assets/logo.png")}
+        <Text style={{ color: colors.grey.dark }}>Langkah 1 dari 2</Text>
+        <Text
+          style={{ fontSize: 18, fontWeight: "700", marginBottom: size.xl }}
+        >
+          Data Akun
+        </Text>
+        <AppTextInputs
+          name="displayName"
+          label="Nama Lengkap"
+          placeholder="Masukkan nama lengkap"
+          control={control}
         />
         <AppTextInputs
           name="email"
           label="Email"
           placeholder="Masukkan email anda"
           control={control}
-          disabled={loading}
         />
         <AppTextInputs
           name="password"
@@ -90,7 +81,6 @@ export default function Register({ navigation }: Props) {
           placeholder="Masukkan password anda"
           secureTextEntry
           control={control}
-          disabled={loading}
         />
         <AppTextInputs
           name="cpassword"
@@ -98,16 +88,10 @@ export default function Register({ navigation }: Props) {
           placeholder="Masukkan kembali password anda"
           secureTextEntry
           control={control}
-          disabled={loading}
         />
-        <Buttons
-          label="Daftar"
-          onPress={handleSubmit(onSubmit)}
-          style={{ marginBottom: size.l }}
-          disabled={loading}
-          loading={loading}
-        />
-        <Text style={{ textAlign: "center" }}>
+      </ScrollView>
+      <View style={{ paddingHorizontal: size.xl }}>
+        <Text style={{ textAlign: "center", marginBottom: size.l }}>
           Sudah punya akun?{" "}
           <Text
             style={{ fontWeight: "700", color: colors.primary }}
@@ -117,7 +101,12 @@ export default function Register({ navigation }: Props) {
             Masuk disini.
           </Text>
         </Text>
-      </ScrollView>
+        <Buttons
+          label="Lanjut"
+          onPress={handleSubmit(onSubmit)}
+          style={{ marginBottom: size.l }}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -127,5 +116,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: size.xl,
     paddingVertical: size.l,
+    paddingTop: Bar?.currentHeight! + size.l,
   },
 });

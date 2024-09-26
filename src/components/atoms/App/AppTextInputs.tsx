@@ -51,7 +51,7 @@ const AppTextInputs: React.FC<AppTextInputsProps> = ({
             value={value}
             defaultValue={defaultValue}
             editable={!disabled}
-            onChangeText={(val) => onChange(val.trim())}
+            onChangeText={onChange}
             onBlur={onBlur}
             secureTextEntry={secureTextEntry}
             style={style}

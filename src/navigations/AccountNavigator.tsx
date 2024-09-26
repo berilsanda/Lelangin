@@ -5,7 +5,6 @@ import ChangePassword from "src/screens/Account/ChangePassword";
 export type AccountStackParamList = {
   Account: undefined;
   ChangePassword: undefined;
-  // EditProfile: undefined;
 };
 
 const Stack = createNativeStackNavigator<AccountStackParamList>();
@@ -24,7 +23,6 @@ export default function AccountNavigator() {
         component={ChangePassword}
         options={{ title: "Ubah Password" }}
       />
-      {/* <Stack.Screen name="EditProfile" component={EditProfile} /> */}
     </Stack.Navigator>
   );
 }
