@@ -1,20 +1,33 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Feather from "@expo/vector-icons/Feather";
-import Home from "src/screens/Home/Home";
+import Home from "src/screens/Home";
 import Transaction from "src/screens/Transaction/Transaction";
-import AddAuction from "src/screens/AddAuction";
 import AccountNavigator from "./AccountNavigator";
+import { CompositeNavigationProp, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackParamList } from "./MainNavigator";
 
-export type StackParamList = {
+export type TabParamList = {
   Home: undefined;
   Transaksi: undefined;
   AccountNav: undefined;
   TambahLelang: undefined;
 };
 
-const Stack = createBottomTabNavigator<StackParamList>();
+type NavigationProps = CompositeNavigationProp<
+  BottomTabNavigationProp<TabParamList>,
+  NativeStackNavigationProp<StackParamList>
+>
+
+const Stack = createBottomTabNavigator<TabParamList>();
 
 export default function HomeNavigator() {
+const navigation = useNavigation<NavigationProps>()
+
+  const AddLelangComponent = () => {
+    return null;
+  };
+
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -43,13 +56,20 @@ export default function HomeNavigator() {
       />
       <Stack.Screen
         name="TambahLelang"
-        component={AddAuction}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="plus-square" color={color} size={size} />
-          ),
-          headerShown: false,
-          tabBarStyle: { display: "none" },
+        component={AddLelangComponent}
+        listeners={{
+          tabPress: e => {
+            e.preventDefault();
+
+            navigation.navigate('TambahLelang');
+          },
+        }}
+        options={() => {
+          return {
+            tabBarIcon: ({ color, size }) => (
+              <Feather name="plus-square" color={color} size={size} />
+            ),
+          };
         }}
       />
       <Stack.Screen

@@ -3,24 +3,22 @@ import {
   NativeSyntheticEvent,
   StyleSheet,
   Text,
-  TextInput,
   TextInputFocusEventData,
   TextInputProps,
-  TextStyle,
   View,
   ViewStyle,
 } from "react-native";
 import { colors, size } from "data/globals";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { TextInputMask, TextInputMaskOptionProp, TextInputMaskTypeProp } from "react-native-masked-text";
 
-interface TextInputsProps extends TextInputProps {
+interface TextInputMasksProps extends TextInputProps {
   label?: string;
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
-  secureTextEntry?: boolean;
   style?: ViewStyle;
-  inputStyle?: TextStyle;
+  inputStyle?: ViewStyle;
   defaultValue?: string;
   disabled?: boolean;
   multiline?: boolean;
@@ -28,14 +26,15 @@ interface TextInputsProps extends TextInputProps {
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   error?: string;
   onPressIcon?: () => void;
+  type: TextInputMaskTypeProp;
+  options?: TextInputMaskOptionProp | undefined;
 }
 
-const TextInputs: React.FC<TextInputsProps> = ({
+const TextInputMasks: React.FC<TextInputMasksProps> = ({
   label,
   placeholder,
   value,
   onChangeText,
-  secureTextEntry = false,
   style,
   inputStyle,
   defaultValue,
@@ -45,31 +44,29 @@ const TextInputs: React.FC<TextInputsProps> = ({
   onBlur,
   error,
   onPressIcon,
+  type="only-numbers",
+  options,
   ...textInputProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [showPassword, setShowPassword] = useState(secureTextEntry);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
 
   return (
     <View style={[styles.viewStyles, style]}>
       {label ? <Text style={{ marginBottom: size.m }}>{label}</Text> : null}
       <View style={{ justifyContent: "center" }}>
-        <TextInput
+        <TextInputMask
           placeholder={placeholder}
           defaultValue={defaultValue}
           editable={!disabled}
           value={value}
+          type={type}
+          options={options}
           onChangeText={onChangeText}
           onFocus={() => setIsFocused(true)}
           onBlur={(e) => {
             setIsFocused(false);
             if (onBlur) onBlur(e);
           }}
-          secureTextEntry={showPassword}
           style={[
             styles.inputStyles,
             {
@@ -88,21 +85,12 @@ const TextInputs: React.FC<TextInputsProps> = ({
           textAlignVertical={multiline ? "top" : "center"}
           {...textInputProps}
         />
-        {icon && !secureTextEntry ? (
+        {icon ? (
           <MaterialCommunityIcons
             name={icon}
             size={20}
             color={colors.grey.dark}
             onPress={onPressIcon}
-            style={styles.iconStyles}
-          />
-        ) : null}
-        {secureTextEntry ? (
-          <MaterialCommunityIcons
-            name={showPassword ? "eye-outline" : "eye-off-outline"}
-            size={20}
-            color={colors.grey.dark}
-            onPress={togglePasswordVisibility}
             style={styles.iconStyles}
           />
         ) : null}
@@ -131,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TextInputs;
+export default TextInputMasks;

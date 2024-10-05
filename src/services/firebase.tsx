@@ -4,6 +4,7 @@ import {
   doc,
   DocumentData,
   getDoc,
+  getDocs,
   getFirestore,
   setDoc,
 } from "firebase/firestore";
@@ -93,4 +94,13 @@ export async function getUser(uid: string): Promise<DocumentData | null> {
   }
 
   return null;
+}
+
+export async function addProducts(body: any) {
+  try {
+
+    await setDoc(doc(database, "products", body.id), body);
+  } catch (error: any) {
+    Alert.alert("Kesalahan", error.message);
+  }
 }

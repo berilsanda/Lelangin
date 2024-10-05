@@ -4,6 +4,7 @@ import Register, { UserRegisterData } from "screens/Register/Register";
 import SplashScreen from "src/screens/SplashScreen";
 import HomeNavigator from "./HomeNavigator";
 import UserDetail from "src/screens/Register/UserDetail";
+import AddAuction from "src/screens/AddAuction";
 
 export type StackParamList = {
   HomeNav: undefined;
@@ -11,6 +12,7 @@ export type StackParamList = {
   Register: undefined;
   UserDetail: UserRegisterData;
   SplashScreen: undefined;
+  TambahLelang: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -21,11 +23,20 @@ export default function MainNavigator() {
       initialRouteName="SplashScreen"
       screenOptions={{ headerShown: false }}
     >
+      <Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="UserDetail" component={UserDetail} />
       <Stack.Screen name="HomeNav" component={HomeNavigator} />
-      <Stack.Screen name="SplashScreen" component={SplashScreen} />
+      <Stack.Screen
+        name="TambahLelang"
+        component={AddAuction}
+        options={{
+          headerShown: true,
+          headerShadowVisible: false,
+          title: "Tambah Lelang",
+        }}
+      />
     </Stack.Navigator>
   );
 }

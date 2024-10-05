@@ -9,5 +9,5 @@ export default function serializeTime(dateObject: Timestamp) {
   const milliseconds = seconds * 1000 + nanoseconds / 1000000;
   const serializedDate = new Date(milliseconds).toISOString();
 
-  return serializedDate;
+  return new Date(serializedDate).toISOString();
 }

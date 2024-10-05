@@ -1,39 +1,42 @@
 import React from "react";
 import { TextInputProps, ViewStyle } from "react-native";
-import TextInputs from "../TextInputs";
 import { Control, Controller } from "react-hook-form";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import TextInputMasks from "../TextInputMasks";
+import { TextInputMaskOptionProp, TextInputMaskTypeProp } from "react-native-masked-text";
 
-interface AppTextInputsProps extends TextInputProps {
+interface AppTextInputMasksProps extends TextInputProps {
   name: string;
   label: string;
   placeholder: string;
   value?: string;
   control: Control<any>;
   onChangeText?: (text: string) => void;
-  secureTextEntry?: boolean;
   style?: ViewStyle;
   inputStyle?: ViewStyle;
   defaultValue?: string;
   disabled?: boolean;
   multiline?: boolean;
   icon?: keyof typeof MaterialCommunityIcons.glyphMap;
+  type: TextInputMaskTypeProp;
+  options?: TextInputMaskOptionProp | undefined;
 }
 
-const AppTextInputs: React.FC<AppTextInputsProps> = ({
+const AppTextInputMasks: React.FC<AppTextInputMasksProps> = ({
   name,
   label,
   placeholder,
   value,
   onChangeText,
   control,
-  secureTextEntry = false,
   style,
   inputStyle,
   defaultValue,
   disabled = false,
   multiline = false,
   icon,
+  type,
+  options,
   ...textInputProps
 }) => {
   return (
@@ -46,14 +49,15 @@ const AppTextInputs: React.FC<AppTextInputsProps> = ({
         fieldState: { error },
       }) => (
         <>
-          <TextInputs
+          <TextInputMasks
             label={label}
             placeholder={placeholder}
             value={value}
+            type={type}
+            options={options}
             editable={!disabled}
             onChangeText={onChange}
             onBlur={onBlur}
-            secureTextEntry={secureTextEntry}
             style={style}
             inputStyle={inputStyle}
             disabled={disabled}
@@ -68,4 +72,4 @@ const AppTextInputs: React.FC<AppTextInputsProps> = ({
   );
 };
 
-export default AppTextInputs;
+export default AppTextInputMasks;
