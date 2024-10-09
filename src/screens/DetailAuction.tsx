@@ -1,6 +1,5 @@
 import {
   Dimensions,
-  Image,
   ScrollView,
   StyleSheet,
   Text,

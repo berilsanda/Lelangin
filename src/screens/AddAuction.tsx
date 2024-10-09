@@ -1,5 +1,5 @@
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";

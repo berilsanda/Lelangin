@@ -45,7 +45,7 @@ const AppDateTimePicker: React.FC<AppDateTimePickerProps> = ({
       defaultValue={defaultValue}
       control={control}
       render={({
-        field: { onChange, onBlur, value },
+        field: { onChange, value },
         fieldState: { error },
       }) => (
         <>
