@@ -148,7 +148,7 @@ export default function Account({ navigation }: Props) {
           <Text style={{ fontWeight: "700", fontSize: 16 }}>
             {userData.displayName || "Belum ada nama"}
           </Text>
-          <Text style={{ color: colors.grey.dark }}>{userData.email}</Text>
+          <Text style={{ color: colors.textSecondary }}>{userData.email}</Text>
         </View>
         <MaterialCommunityIcons
           name="pencil-outline"
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     marginRight: size.l,
   },
   modalContainer: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
     borderRadius: size.s,
     marginHorizontal: size.xl,
     padding: size.l,

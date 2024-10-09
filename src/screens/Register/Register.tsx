@@ -57,7 +57,7 @@ export default function Register({ navigation }: Props) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        <Text style={{ color: colors.grey.dark }}>Langkah 1 dari 2</Text>
+        <Text style={{ color: colors.textSecondary }}>Langkah 1 dari 2</Text>
         <Text
           style={{ fontSize: 18, fontWeight: "700", marginBottom: size.xl }}
         >

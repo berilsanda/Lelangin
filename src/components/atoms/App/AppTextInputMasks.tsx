@@ -56,7 +56,7 @@ const AppTextInputMasks: React.FC<AppTextInputMasksProps> = ({
             type={type}
             options={options}
             editable={!disabled}
-            onChangeText={onChange}
+            onChangeText={(maskedValue, rawValue) => onChange(rawValue)}
             onBlur={onBlur}
             style={style}
             inputStyle={inputStyle}

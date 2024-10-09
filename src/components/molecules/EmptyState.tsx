@@ -16,7 +16,7 @@ export default function EmptyState({ title, subtitle }: EmptyStateProps) {
         resizeMode="center"
       />
       <Text style={styles.title}>{title}</Text>
-      <Text style={{ color: colors.grey.dark, textAlign: "center" }}>
+      <Text style={{ color: colors.textSecondary, textAlign: "center" }}>
         {subtitle}
       </Text>
     </View>

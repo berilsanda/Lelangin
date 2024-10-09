@@ -16,7 +16,7 @@ interface TextInputMasksProps extends TextInputProps {
   label?: string;
   placeholder: string;
   value: string;
-  onChangeText: (text: string) => void;
+  onChangeText: (maskedText: string, rawText?: string) => void;
   style?: ViewStyle;
   inputStyle?: ViewStyle;
   defaultValue?: string;
@@ -61,7 +61,8 @@ const TextInputMasks: React.FC<TextInputMasksProps> = ({
           value={value}
           type={type}
           options={options}
-          onChangeText={onChangeText}
+          includeRawValueInChangeText={true}
+          onChangeText={(maskedText, rawText) => onChangeText(maskedText, rawText)}
           onFocus={() => setIsFocused(true)}
           onBlur={(e) => {
             setIsFocused(false);
@@ -72,7 +73,7 @@ const TextInputMasks: React.FC<TextInputMasksProps> = ({
             {
               paddingVertical: multiline ? 10 : 5,
               borderColor: error
-                ? colors.error
+                ? colors.warning
                 : isFocused
                 ? colors.primary
                 : colors.grey.light,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     marginTop: size.s,
-    color: colors.error,
+    color: colors.warning,
   },
 });
 

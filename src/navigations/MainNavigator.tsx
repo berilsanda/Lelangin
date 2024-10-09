@@ -5,6 +5,8 @@ import SplashScreen from "src/screens/SplashScreen";
 import HomeNavigator from "./HomeNavigator";
 import UserDetail from "src/screens/Register/UserDetail";
 import AddAuction from "src/screens/AddAuction";
+import DetailAuction from "src/screens/DetailAuction";
+import { ProductType } from "src/screens/Home";
 
 export type StackParamList = {
   HomeNav: undefined;
@@ -13,6 +15,7 @@ export type StackParamList = {
   UserDetail: UserRegisterData;
   SplashScreen: undefined;
   TambahLelang: undefined;
+  DetailLelang: ProductType;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -35,6 +38,15 @@ export default function MainNavigator() {
           headerShown: true,
           headerShadowVisible: false,
           title: "Tambah Lelang",
+        }}
+      />
+      <Stack.Screen
+        name="DetailLelang"
+        component={DetailAuction}
+        options={{
+          headerShown: true,
+          headerShadowVisible: false,
+          title: "Detail Lelang",
         }}
       />
     </Stack.Navigator>

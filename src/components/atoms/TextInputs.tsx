@@ -75,7 +75,7 @@ const TextInputs: React.FC<TextInputsProps> = ({
             {
               paddingVertical: multiline ? 10 : 5,
               borderColor: error
-                ? colors.error
+                ? colors.warning
                 : isFocused
                 ? colors.primary
                 : colors.grey.light,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     marginTop: size.s,
-    color: colors.error,
+    color: colors.warning,
   },
 });
 

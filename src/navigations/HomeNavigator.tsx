@@ -19,7 +19,7 @@ type NavigationProps = CompositeNavigationProp<
   NativeStackNavigationProp<StackParamList>
 >
 
-const Stack = createBottomTabNavigator<TabParamList>();
+const Tab = createBottomTabNavigator<TabParamList>();
 
 export default function HomeNavigator() {
 const navigation = useNavigation<NavigationProps>()
@@ -29,13 +29,13 @@ const navigation = useNavigation<NavigationProps>()
   };
 
   return (
-    <Stack.Navigator
+    <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
         tabBarShowLabel: false,
       }}
     >
-      <Stack.Screen
+      <Tab.Screen
         name="Home"
         component={Home}
         options={{
@@ -45,7 +45,7 @@ const navigation = useNavigation<NavigationProps>()
           ),
         }}
       />
-      <Stack.Screen
+      {/* <Tab.Screen
         name="Transaksi"
         component={Transaction}
         options={{
@@ -53,8 +53,8 @@ const navigation = useNavigation<NavigationProps>()
             <Feather name="file-text" color={color} size={size} />
           ),
         }}
-      />
-      <Stack.Screen
+      /> */}
+      <Tab.Screen
         name="TambahLelang"
         component={AddLelangComponent}
         listeners={{
@@ -72,7 +72,7 @@ const navigation = useNavigation<NavigationProps>()
           };
         }}
       />
-      <Stack.Screen
+      <Tab.Screen
         name="AccountNav"
         component={AccountNavigator}
         options={{
@@ -82,6 +82,6 @@ const navigation = useNavigation<NavigationProps>()
           headerShown: false,
         }}
       />
-    </Stack.Navigator>
+    </Tab.Navigator>
   );
 }

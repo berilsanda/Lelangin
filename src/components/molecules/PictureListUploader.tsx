@@ -11,6 +11,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { colors, size } from "src/data/globals";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import ImageLightbox from "../atoms/ImageLightbox";
 
 interface PictureListUploaderProps {
   label: string;
@@ -33,7 +34,7 @@ const PictureListUploader: React.FC<PictureListUploaderProps> = ({
     });
 
     if (!result.canceled) {
-      setPictureList((prev) => [...prev, result.assets[0].uri]);
+      setPictureList([...pictureList, result.assets[0].uri]);
     }
   };
 
@@ -55,13 +56,13 @@ const PictureListUploader: React.FC<PictureListUploaderProps> = ({
   const ImageItem = ({ picture, index }: ImageItemProps) => {
     return (
       <View>
-        <Image source={{ uri: picture }} style={styles.image} />
+        <ImageLightbox source={picture} style={styles.image} />
         <TouchableOpacity
           style={styles.imgDeleteBtn}
           activeOpacity={0.8}
           onPress={() => deletePicture(index)}
         >
-          <Text style={{ color: colors.background, textAlign: "center" }}>
+          <Text style={{ color: colors.surface, textAlign: "center" }}>
             Hapus
           </Text>
         </TouchableOpacity>
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     padding: 36,
   },
   errorText: {
-    color: colors.error,
+    color: colors.warning,
     marginTop: size.sm,
   },
 });

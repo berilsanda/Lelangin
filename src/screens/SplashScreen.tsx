@@ -68,6 +68,6 @@ const styles = StyleSheet.create({
     bottom: 16,
     textAlign: "center",
     zIndex: 99,
-    color: colors.grey.dark,
+    color: colors.textSecondary,
   },
 });

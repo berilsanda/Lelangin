@@ -1,6 +1,6 @@
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import uuid from "react-native-uuid";
@@ -21,10 +21,28 @@ import { STORAGE_BUCKET } from "src/env";
 import uploadImageAsync from "src/services/uploadImageAsync";
 import { StackParamList } from "src/navigations/MainNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import combineDateTime from "src/utils/combineDateTime";
+
+type FormData = {
+  pictureList: string[];
+  title: string;
+  description: string;
+  startingBid: number;
+  stepBid?: number;
+  timeAuctionEnd: string;
+  dateAuctionEnd: string;
+};
 
 const schema = yup.object().shape({
+  pictureList: yup
+    .array()
+    .of(yup.string().required())
+    .min(1, "Foto tidak boleh kosong.")
+    .required("Harap pilih foto."),
   title: yup.string().required("Silahkan isi nama barang."),
   description: yup.string().required("Silahkan masukkan deskripsi barang."),
+  startingBid: yup.number().required("Silahkan masukkan harga awal."),
+  stepBid: yup.number(),
   timeAuctionEnd: yup.string().required("Silahkan pilih jam berakhir lelang."),
   dateAuctionEnd: yup
     .string()
@@ -39,25 +57,20 @@ const schema = yup.object().shape({
 type Props = NativeStackScreenProps<StackParamList, "TambahLelang">;
 
 export default function AddAuction({ navigation }: Props) {
-// Todo : 
-// - Fix validation for picture, conditions, auction end time
-// - add loading spinner animations
-// - Add image lightbox to uploader component
+  // Todo :
+  // - Fix validation for conditions
+  // - add loading spinner animations
+  // - auto refresh home page after add item
 
-  const [loading, setLoading] = useState(false);
-  const [conditions, setConditons] = useState();
-  const [pictureList, setPictureList] = useState<string[]>([]);
-  const [imageError, setImageError] = useState("");
-  const userData = useSelector((state: any) => state.persist.userData);
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
-  function parseCurrency(input: string): number {
-    return parseInt(input.replace(/Rp|\s|\./g, ""));
-  }
+  const [loading, setLoading] = useState(false);
+  const [conditions, setConditons] = useState();
+  const userData = useSelector((state: any) => state.persist.userData);
 
-  async function onSubmit(data: any) {
+  async function onSubmit(data: FormData) {
     setLoading(true);
     try {
       let productId = uuid.v4();
@@ -65,7 +78,7 @@ export default function AddAuction({ navigation }: Props) {
       // upload image
       const pathToUpload = `Product/${productId}/Images`;
       const imageList = await Promise.all(
-        pictureList.map(async (picture) => {
+        data.pictureList.map(async (picture) => {
           let image = picture;
           if (!picture.includes(STORAGE_BUCKET)) {
             const imageId = uuid.v4();
@@ -79,18 +92,9 @@ export default function AddAuction({ navigation }: Props) {
         })
       );
 
-      // combine time date data
-      const dateAuctionEnd = new Date(data.dateAuctionEnd);
-      const timeAuctionEnd = new Date(data.timeAuctionEnd);
-
-      dateAuctionEnd.setHours(timeAuctionEnd.getHours());
-      dateAuctionEnd.setMinutes(timeAuctionEnd.getMinutes());
-      dateAuctionEnd.setSeconds(timeAuctionEnd.getSeconds());
-      dateAuctionEnd.setMilliseconds(timeAuctionEnd.getMilliseconds());
-
       let sendData = {
         id: productId,
-        auctionEnd: dateAuctionEnd,
+        auctionEnd: combineDateTime(data.dateAuctionEnd, data.timeAuctionEnd),
         bidder: [],
         condition: conditions,
         createdAt: new Date(),
@@ -98,9 +102,9 @@ export default function AddAuction({ navigation }: Props) {
         currentBid: 0,
         description: data.description,
         images: imageList,
-        startingBid: parseCurrency(data.startingBid),
+        startingBid: data.startingBid,
         status: "active",
-        stepBid: parseCurrency(data.stepBid),
+        stepBid: data.stepBid || 0,
         title: data.title,
         winner: null,
       };
@@ -108,7 +112,6 @@ export default function AddAuction({ navigation }: Props) {
       await addProducts(sendData);
 
       reset();
-      setPictureList([]);
       setConditons(undefined);
       Alert.alert("Berhasil", "Lelang anda berhasil ditambah!");
       navigation.goBack();
@@ -124,11 +127,18 @@ export default function AddAuction({ navigation }: Props) {
         style={styles.container}
         contentContainerStyle={{ paddingBottom: size.l }}
       >
-        <PictureListUploader
-          label="Foto Barang"
-          pictureList={pictureList}
-          setPictureList={setPictureList}
-          error={imageError}
+        <Controller
+          name="pictureList"
+          control={control}
+          defaultValue={[]}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <PictureListUploader
+              label="Foto Barang"
+              pictureList={value}
+              setPictureList={(newList) => onChange(newList)}
+              error={error?.message}
+            />
+          )}
         />
         <AppTextInputs
           name="title"
@@ -165,7 +175,6 @@ export default function AddAuction({ navigation }: Props) {
           placeholder="Masukkan harga awal"
           control={control}
           disabled={loading}
-          defaultValue="0"
           keyboardType="numeric"
           type="money"
           options={{
@@ -181,7 +190,6 @@ export default function AddAuction({ navigation }: Props) {
           placeholder="Masukkan kelipatan harga lelang"
           control={control}
           disabled={loading}
-          defaultValue="0"
           keyboardType="numeric"
           type="money"
           options={{

@@ -25,7 +25,7 @@ const Buttons: React.FC<ButtonsProps> = ({
   label,
   onPress,
   color = colors.primary,
-  labelColor = colors.background,
+  labelColor = colors.surface,
   style,
   labelStyle,
   disabled = false,

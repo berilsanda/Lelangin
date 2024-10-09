@@ -21,12 +21,13 @@ import {
 } from "firebase/firestore";
 import { database } from "src/services/firebase";
 import EmptyState from "src/components/molecules/EmptyState";
+import serializeTime from "src/utils/serializeTime";
 
-interface ProductType {
-  auctionEnd: Date;
+export interface ProductType {
+  auctionEnd: string | null;
   bidder: any[];
   condition: string;
-  createdAt: Date;
+  createdAt: string | null;
   createdBy: string;
   currentBid: number;
   description: string;
@@ -62,9 +63,9 @@ export default function Home() {
           startingBid: doc.data().startingBid || 0,
           currentBid: doc.data().currentBid || 0,
           images: doc.data().images || [],
-          auctionEnd: doc.data().auctionEnd.toDate(),
+          auctionEnd: serializeTime(doc.data().auctionEnd),
           condition: doc.data().condition || "-",
-          createdAt: doc.data().createdAt.toDate(),
+          createdAt: serializeTime(doc.data().createdAt),
           createdBy: doc.data().createdBy || "-",
           stepBid: doc.data().stepBid || 10000,
           status: doc.data().status || "active",
@@ -138,16 +139,7 @@ export default function Home() {
               }
               renderItem={({ item }) => {
                 return (
-                  <ItemCard
-                    id={item.id}
-                    image={item.images[0]}
-                    title={item.title}
-                    price={
-                      item.currentBid == 0 ? item.startingBid : item.currentBid
-                    }
-                    bidder={item.bidder.length}
-                    dueDate={new Date(item.auctionEnd)}
-                  />
+                  <ItemCard item={item}/>
                 );
               }}
             />
