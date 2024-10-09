@@ -24,7 +24,13 @@ export default function MainNavigator() {
   return (
     <Stack.Navigator
       initialRouteName="SplashScreen"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        headerTitleStyle: {
+          fontFamily: "NunitoSans_700Bold",
+          fontSize: 18,
+        },
+      }}
     >
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="Login" component={Login} />

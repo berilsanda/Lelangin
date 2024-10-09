@@ -15,6 +15,10 @@ export default function AccountNavigator() {
       initialRouteName="Account"
       screenOptions={{
         headerShadowVisible: false,
+        headerTitleStyle: {
+          fontFamily: "NunitoSans_700Bold",
+          fontSize: 18,
+        },
       }}
     >
       <Stack.Screen name="Account" component={Account} />

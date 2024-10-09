@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import { NumericFormat } from "react-number-format";
-import { colors, size } from "src/data/globals";
+import { colors, size, typography } from "src/data/globals";
 import { StackParamList } from "src/navigations/MainNavigator";
 import { ProductType } from "src/screens/Home";
 
@@ -29,14 +29,14 @@ const ItemCard: React.FC<ItemCardProps> = ({item}) => {
     <TouchableOpacity style={styles.cardContainer} onPress={() => navigation.navigate('DetailLelang', item)}>
       <Image source={{ uri: item.images[0] }} style={styles.image} resizeMode="cover" />
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={typography.label3}>{item.title}</Text>
         <NumericFormat
           value={item.currentBid == 0 ? item.startingBid : item.currentBid}
           displayType={"text"}
           prefix={"Rp "}
           thousandSeparator="."
           decimalSeparator=","
-          renderText={(val) => <Text style={styles.price}>{val}</Text>}
+          renderText={(val) => <Text style={[typography.label1,styles.price]}>{val}</Text>}
         />
         <View
           style={{
@@ -45,8 +45,8 @@ const ItemCard: React.FC<ItemCardProps> = ({item}) => {
             justifyContent: "space-between",
           }}
         >
-          <Text style={styles.infoText}>{item.bidder.length} Bidder</Text>
-          <Text style={styles.infoText}>{moment(item.auctionEnd).fromNow()}</Text>
+          <Text style={[typography.paragraph4, styles.infoText]}>{item.bidder.length} Bidder</Text>
+          <Text style={[typography.paragraph4, styles.infoText]}>{moment(item.auctionEnd).fromNow()}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -71,18 +71,12 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: size.m,
   },
-  title: {
-    fontSize: 16,
-  },
   price: {
     marginTop: size.s,
     marginBottom: size.m,
-    fontSize: 18,
-    fontWeight: "700",
     color: colors.warning,
   },
   infoText: {
-    fontSize: 12,
     color: colors.textSecondary,
   },
 });

@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AppTextInputs, Buttons } from "components/atoms";
-import { colors, size } from "data/globals";
+import { colors, size, typography } from "data/globals";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "src/navigations/MainNavigator";
 
@@ -57,10 +57,10 @@ export default function Register({ navigation }: Props) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        <Text style={{ color: colors.textSecondary }}>Langkah 1 dari 2</Text>
-        <Text
-          style={{ fontSize: 18, fontWeight: "700", marginBottom: size.xl }}
-        >
+        <Text style={{ ...typography.paragraph4, color: colors.textSecondary }}>
+          Langkah 1 dari 2
+        </Text>
+        <Text style={{ ...typography.heading2, marginBottom: size.xl }}>
           Data Akun
         </Text>
         <AppTextInputs
@@ -91,10 +91,16 @@ export default function Register({ navigation }: Props) {
         />
       </ScrollView>
       <View style={{ paddingHorizontal: size.xl }}>
-        <Text style={{ textAlign: "center", marginBottom: size.l }}>
+        <Text
+          style={{
+            ...typography.paragraph3,
+            textAlign: "center",
+            marginBottom: size.l,
+          }}
+        >
           Sudah punya akun?{" "}
           <Text
-            style={{ fontWeight: "700", color: colors.primary }}
+            style={{ ...typography.label3, color: colors.primary }}
             suppressHighlighting
             onPress={() => navigation.navigate("Login")}
           >

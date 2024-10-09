@@ -28,6 +28,9 @@
         "projectId": "075eb22b-a6fc-4d88-a7c0-56bcffcded70"
       }
     },
-    "owner": "neocortex71"
+    "owner": "neocortex71",
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

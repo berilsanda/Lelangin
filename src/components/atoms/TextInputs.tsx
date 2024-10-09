@@ -10,7 +10,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { colors, size } from "data/globals";
+import { colors, size, typography } from "data/globals";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 interface TextInputsProps extends TextInputProps {
@@ -56,7 +56,7 @@ const TextInputs: React.FC<TextInputsProps> = ({
 
   return (
     <View style={[styles.viewStyles, style]}>
-      {label ? <Text style={{ marginBottom: size.m }}>{label}</Text> : null}
+      {label ? <Text style={{...typography.paragraph3, marginBottom: size.m }}>{label}</Text> : null}
       <View style={{ justifyContent: "center" }}>
         <TextInput
           placeholder={placeholder}
@@ -71,6 +71,7 @@ const TextInputs: React.FC<TextInputsProps> = ({
           }}
           secureTextEntry={showPassword}
           style={[
+            typography.paragraph3,
             styles.inputStyles,
             {
               paddingVertical: multiline ? 10 : 5,
@@ -107,7 +108,7 @@ const TextInputs: React.FC<TextInputsProps> = ({
           />
         ) : null}
       </View>
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {error ? <Text style={[typography.paragraph3, styles.errorText]}>{error}</Text> : null}
     </View>
   );
 };

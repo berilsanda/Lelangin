@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AppTextInputs, Buttons } from "components/atoms";
-import { colors, size } from "data/globals";
+import { colors, size, typography } from "data/globals";
 import { auth, createUser, UserRegister } from "src/services/firebase";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "src/navigations/MainNavigator";
@@ -110,10 +110,10 @@ export default function UserDetail({ navigation, route: { params } }: Props) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={{ color: colors.textSecondary }}>Langkah 2 dari 2</Text>
-        <Text
-          style={{ fontSize: 18, fontWeight: "700", marginBottom: size.xl }}
-        >
+        <Text style={{ ...typography.paragraph4, color: colors.textSecondary }}>
+          Langkah 2 dari 2
+        </Text>
+        <Text style={{ ...typography.heading2, marginBottom: size.xl }}>
           Data Pengguna
         </Text>
         <View>

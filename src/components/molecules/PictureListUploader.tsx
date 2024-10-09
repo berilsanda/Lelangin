@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { Dispatch, SetStateAction } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { colors, size } from "src/data/globals";
+import { colors, size, typography } from "src/data/globals";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import ImageLightbox from "../atoms/ImageLightbox";
 
@@ -61,7 +61,7 @@ const PictureListUploader: React.FC<PictureListUploaderProps> = ({
           activeOpacity={0.8}
           onPress={() => deletePicture(index)}
         >
-          <Text style={{ color: colors.surface, textAlign: "center" }}>
+          <Text style={{ ...typography.paragraph3, color: colors.surface, textAlign: "center" }}>
             Hapus
           </Text>
         </TouchableOpacity>
@@ -71,7 +71,7 @@ const PictureListUploader: React.FC<PictureListUploaderProps> = ({
 
   return (
     <View style={{ marginBottom: size.l }}>
-      <Text style={{ marginBottom: size.m }}>Foto Barang</Text>
+      <Text style={{ ...typography.paragraph3, marginBottom: size.m }}>Foto Barang</Text>
       <ScrollView horizontal>
         {pictureList.length > 0
           ? pictureList.map((item, index) => {
@@ -92,7 +92,7 @@ const PictureListUploader: React.FC<PictureListUploaderProps> = ({
           </TouchableOpacity>
         )}
       </ScrollView>
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {error ? <Text style={[typography.paragraph3, styles.errorText]}>{error}</Text> : null}
     </View>
   );
 };

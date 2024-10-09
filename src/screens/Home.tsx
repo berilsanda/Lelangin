@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import { TextInputs } from "src/components/atoms";
-import { size } from "src/data/globals";
+import { size, typography } from "src/data/globals";
 import ItemCard from "src/components/molecules/Card/ItemCard";
 import {
   collection,
@@ -118,7 +118,7 @@ export default function Home() {
       </View>
 
       <View style={{ marginTop: size.l }}>
-        <Text style={{ fontWeight: "700" }}>Lelang Terbaru</Text>
+        <Text style={typography.label3}>Lelang Terbaru</Text>
         <View style={{ marginTop: size.l, flexShrink: 2 }}>
           {loading || refreshing ? (
             <ActivityIndicator />

@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AppTextInputs, Buttons } from "components/atoms";
-import { colors, size } from "data/globals";
+import { colors, size, typography } from "data/globals";
 import { UserLogin } from "src/services/firebase";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "src/navigations/MainNavigator";
@@ -91,7 +91,13 @@ export default function Login({ navigation }: Props) {
           control={control}
           disabled={loading}
         />
-        <Text style={{ textAlign: "right", marginBottom: size.l }}>
+        <Text
+          style={{
+            ...typography.label3,
+            textAlign: "right",
+            marginBottom: size.l,
+          }}
+        >
           Lupa Password?
         </Text>
         <Buttons
@@ -101,10 +107,10 @@ export default function Login({ navigation }: Props) {
           disabled={loading}
           loading={loading}
         />
-        <Text style={{ textAlign: "center" }}>
+        <Text style={{ ...typography.paragraph3, textAlign: "center" }}>
           Belum punya akun?{" "}
           <Text
-            style={{ fontWeight: "700", color: colors.primary }}
+            style={{ ...typography.label3, color: colors.primary }}
             suppressHighlighting
             onPress={() => navigation.navigate("Register")}
           >

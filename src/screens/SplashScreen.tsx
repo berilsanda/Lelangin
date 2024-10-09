@@ -1,6 +1,6 @@
 import { View, Text, Image, Dimensions, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
-import { colors } from "src/data/globals";
+import { colors, typography } from "src/data/globals";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "src/navigations/MainNavigator";
 import { auth, getUser } from "src/services/firebase";
@@ -55,7 +55,7 @@ export default function SplashScreen({ navigation }: Props) {
         resizeMode="cover"
         source={require("assets/splash.png")}
       />
-      <Text style={styles.versionText}>Ver 1.0.0</Text>
+      <Text style={[typography.paragraph3, styles.versionText]}>Ver 1.0.0</Text>
     </View>
   );
 }

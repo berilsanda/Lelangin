@@ -18,7 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 
 import { auth } from "src/services/firebase";
 import { signOut, updateProfile } from "firebase/auth";
-import { colors, size } from "src/data/globals";
+import { colors, size, typography } from "src/data/globals";
 import { AccountStackParamList } from "src/navigations/AccountNavigator";
 import { TextInputs, AppModals, Buttons } from "components/atoms";
 import { resetUser, setUser } from "src/reduxs/reducer/persistReducer";
@@ -120,7 +120,7 @@ export default function Account({ navigation }: Props) {
             style={{ marginRight: size.m }}
           />
         ) : null}
-        <Text style={{ flex: 1 }}>{label}</Text>
+        <Text style={{ ...typography.paragraph3, flex: 1 }}>{label}</Text>
         <Feather name="chevron-right" color={colors.grey.dark} />
       </TouchableOpacity>
     );
@@ -145,10 +145,10 @@ export default function Account({ navigation }: Props) {
           </View>
         )}
         <View style={{ flex: 1 }}>
-          <Text style={{ fontWeight: "700", fontSize: 16 }}>
+          <Text style={typography.label2}>
             {userData.displayName || "Belum ada nama"}
           </Text>
-          <Text style={{ color: colors.textSecondary }}>{userData.email}</Text>
+          <Text style={{ ...typography.paragraph3, color: colors.textSecondary }}>{userData.email}</Text>
         </View>
         <MaterialCommunityIcons
           name="pencil-outline"
@@ -177,7 +177,7 @@ export default function Account({ navigation }: Props) {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalHeader}>
-            <Text>Edit Profil</Text>
+            <Text style={typography.label3}>Edit Profil</Text>
             <MaterialCommunityIcons
               name="close"
               size={20}

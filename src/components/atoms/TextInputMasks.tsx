@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { colors, size } from "data/globals";
+import { colors, size, typography } from "data/globals";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { TextInputMask, TextInputMaskOptionProp, TextInputMaskTypeProp } from "react-native-masked-text";
 
@@ -52,7 +52,7 @@ const TextInputMasks: React.FC<TextInputMasksProps> = ({
 
   return (
     <View style={[styles.viewStyles, style]}>
-      {label ? <Text style={{ marginBottom: size.m }}>{label}</Text> : null}
+      {label ? <Text style={{ ...typography.paragraph3, marginBottom: size.m }}>{label}</Text> : null}
       <View style={{ justifyContent: "center" }}>
         <TextInputMask
           placeholder={placeholder}
@@ -96,7 +96,7 @@ const TextInputMasks: React.FC<TextInputMasksProps> = ({
           />
         ) : null}
       </View>
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {error ? <Text style={[typography.paragraph3, styles.errorText]}>{error}</Text> : null}
     </View>
   );
 };

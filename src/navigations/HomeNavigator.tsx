@@ -33,6 +33,10 @@ const navigation = useNavigation<NavigationProps>()
       initialRouteName="Home"
       screenOptions={{
         tabBarShowLabel: false,
+        headerTitleStyle: {
+          fontFamily: "NunitoSans_700Bold",
+          fontSize: 18,
+        },
       }}
     >
       <Tab.Screen

@@ -6,7 +6,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { colors, size } from "src/data/globals";
+import { colors, size, typography } from "src/data/globals";
 
 interface RadioGroupsProps {
   label?: string;
@@ -50,7 +50,7 @@ const RadioGroups: React.FC<RadioGroupsProps> = ({
                   ]}
                 />
               </View>
-              <Text>{item.label}</Text>
+              <Text style={typography.paragraph3}>{item.label}</Text>
             </TouchableOpacity>
           );
         })}

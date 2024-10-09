@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from "react-native";
-import { colors, size } from "data/globals";
+import { colors, size, typography } from "data/globals";
 
 interface ButtonsProps {
   label: string;
@@ -60,6 +60,7 @@ const Buttons: React.FC<ButtonsProps> = ({
       ) : null}
       <Text
         style={[
+          typography.label3,
           styles.labelStyle,
           mode == "contained"
             ? { color: disabled ? colors.grey.dark : labelColor }

@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { colors } from "src/data/globals";
+import { colors, typography } from "src/data/globals";
 
 interface EmptyStateProps {
   title: string;
@@ -15,8 +15,14 @@ export default function EmptyState({ title, subtitle }: EmptyStateProps) {
         source={require("assets/noData.png")}
         resizeMode="center"
       />
-      <Text style={styles.title}>{title}</Text>
-      <Text style={{ color: colors.textSecondary, textAlign: "center" }}>
+      <Text style={typography.label2}>{title}</Text>
+      <Text
+        style={{
+          ...typography.paragraph3,
+          color: colors.textSecondary,
+          textAlign: "center",
+        }}
+      >
         {subtitle}
       </Text>
     </View>
@@ -35,9 +41,5 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
     resizeMode: "center",
-  },
-  title: {
-    fontWeight: "600",
-    fontSize: 16,
   },
 });
