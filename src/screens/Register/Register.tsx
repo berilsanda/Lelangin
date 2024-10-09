@@ -57,12 +57,8 @@ export default function Register({ navigation }: Props) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        <Text style={{ ...typography.paragraph4, color: colors.textSecondary }}>
-          Langkah 1 dari 2
-        </Text>
-        <Text style={{ ...typography.heading2, marginBottom: size.xl }}>
-          Data Akun
-        </Text>
+        <Text style={styles.subtitle}>Langkah 1 dari 2</Text>
+        <Text style={styles.title}>Data Akun</Text>
         <AppTextInputs
           name="displayName"
           label="Nama Lengkap"
@@ -123,5 +119,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: size.xl,
     paddingVertical: size.l,
     paddingTop: Bar?.currentHeight! + size.l,
+  },
+  title: {
+    ...typography.heading2,
+    marginBottom: size.xl,
+  },
+  subtitle: {
+    ...typography.paragraph4,
+    color: colors.textSecondary,
   },
 });

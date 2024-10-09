@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import { colors, size, typography } from "data/globals";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { TextInputMask, TextInputMaskOptionProp, TextInputMaskTypeProp } from "react-native-masked-text";
+import {
+  TextInputMask,
+  TextInputMaskOptionProp,
+  TextInputMaskTypeProp,
+} from "react-native-masked-text";
 
 interface TextInputMasksProps extends TextInputProps {
   label?: string;
@@ -44,7 +48,7 @@ const TextInputMasks: React.FC<TextInputMasksProps> = ({
   onBlur,
   error,
   onPressIcon,
-  type="only-numbers",
+  type = "only-numbers",
   options,
   ...textInputProps
 }) => {
@@ -52,7 +56,11 @@ const TextInputMasks: React.FC<TextInputMasksProps> = ({
 
   return (
     <View style={[styles.viewStyles, style]}>
-      {label ? <Text style={{ ...typography.paragraph3, marginBottom: size.m }}>{label}</Text> : null}
+      {label ? (
+        <Text style={{ ...typography.paragraph3, marginBottom: size.m }}>
+          {label}
+        </Text>
+      ) : null}
       <View style={{ justifyContent: "center" }}>
         <TextInputMask
           placeholder={placeholder}
@@ -62,7 +70,9 @@ const TextInputMasks: React.FC<TextInputMasksProps> = ({
           type={type}
           options={options}
           includeRawValueInChangeText={true}
-          onChangeText={(maskedText, rawText) => onChangeText(maskedText, rawText)}
+          onChangeText={(maskedText, rawText) =>
+            onChangeText(maskedText, rawText)
+          }
           onFocus={() => setIsFocused(true)}
           onBlur={(e) => {
             setIsFocused(false);
@@ -96,7 +106,7 @@ const TextInputMasks: React.FC<TextInputMasksProps> = ({
           />
         ) : null}
       </View>
-      {error ? <Text style={[typography.paragraph3, styles.errorText]}>{error}</Text> : null}
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
 };
@@ -112,11 +122,12 @@ const styles = StyleSheet.create({
   },
   iconStyles: {
     position: "absolute",
-    right: size.l
+    right: size.l,
   },
   errorText: {
     marginTop: size.s,
     color: colors.warning,
+    ...typography.paragraph3,
   },
 });
 

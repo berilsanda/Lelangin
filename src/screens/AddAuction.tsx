@@ -28,7 +28,7 @@ type FormData = {
   title: string;
   description: string;
   startingBid: number;
-  stepBid?: number;
+  stepBid: number;
   timeAuctionEnd: string;
   dateAuctionEnd: string;
 };
@@ -41,8 +41,28 @@ const schema = yup.object().shape({
     .required("Harap pilih foto."),
   title: yup.string().required("Silahkan isi nama barang."),
   description: yup.string().required("Silahkan masukkan deskripsi barang."),
-  startingBid: yup.number().required("Silahkan masukkan harga awal."),
-  stepBid: yup.number(),
+  startingBid: yup
+    .number()
+    .required("Silahkan masukkan harga awal.")
+    .min(1000, 'Minimal harga awal Rp 1.000')
+    .test(
+      "is-divisible-by-100",
+      "Masukkan nilai yang dapat dibagi 100.",
+      (value) => {
+        return value % 100 === 0;
+      }
+    ),
+  stepBid: yup
+    .number()
+    .required("Silahkan masukkan kelipatan harga.")
+    .min(1000, 'Minimal kelipatan harga Rp 1.000')
+    .test(
+      "is-divisible-by-100",
+      "Masukkan nilai yang dapat dibagi 100.",
+      (value) => {
+        return value % 100 === 0;
+      }
+    ),
   timeAuctionEnd: yup.string().required("Silahkan pilih jam berakhir lelang."),
   dateAuctionEnd: yup
     .string()
@@ -104,7 +124,7 @@ export default function AddAuction({ navigation }: Props) {
         images: imageList,
         startingBid: data.startingBid,
         status: "active",
-        stepBid: data.stepBid || 0,
+        stepBid: data.stepBid && data.stepBid > 1000 ? data.stepBid : 1000,
         title: data.title,
         winner: null,
       };
@@ -186,12 +206,13 @@ export default function AddAuction({ navigation }: Props) {
         />
         <AppTextInputMasks
           name="stepBid"
-          label="Kelipatan Harga (Opsional)"
+          label="Kelipatan Harga (Default Rp 1.000)"
           placeholder="Masukkan kelipatan harga lelang"
           control={control}
           disabled={loading}
           keyboardType="numeric"
           type="money"
+          defaultValue="1000"
           options={{
             precision: 0,
             separator: "",

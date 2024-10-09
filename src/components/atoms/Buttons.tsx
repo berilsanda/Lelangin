@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
     borderRadius: size.s,
     paddingVertical: size.s,
     paddingHorizontal: size.l,
-    width: "100%",
     flexDirection: "row",
   },
   btnContained: {},

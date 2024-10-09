@@ -6,7 +6,6 @@ import HomeNavigator from "./HomeNavigator";
 import UserDetail from "src/screens/Register/UserDetail";
 import AddAuction from "src/screens/AddAuction";
 import DetailAuction from "src/screens/DetailAuction";
-import { ProductType } from "src/screens/Home";
 
 export type StackParamList = {
   HomeNav: undefined;
@@ -15,7 +14,7 @@ export type StackParamList = {
   UserDetail: UserRegisterData;
   SplashScreen: undefined;
   TambahLelang: undefined;
-  DetailLelang: ProductType;
+  DetailLelang: { id: string };
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();

@@ -108,7 +108,7 @@ const TextInputs: React.FC<TextInputsProps> = ({
           />
         ) : null}
       </View>
-      {error ? <Text style={[typography.paragraph3, styles.errorText]}>{error}</Text> : null}
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
 };
@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   errorText: {
     marginTop: size.s,
     color: colors.warning,
+    ...typography.paragraph3
   },
 });
 

@@ -14,7 +14,6 @@ import { colors, size, typography } from "src/data/globals";
 import { StackParamList } from "src/navigations/MainNavigator";
 import { ProductType } from "src/screens/Home";
 
-
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = (width - 2 * size.xl - size.l) / 2;
 
@@ -22,12 +21,19 @@ type ItemCardProps = {
   item: ProductType;
 };
 
-const ItemCard: React.FC<ItemCardProps> = ({item}) => {
-  const navigation = useNavigation<NavigationProp<StackParamList>>()
+const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
+  const navigation = useNavigation<NavigationProp<StackParamList>>();
 
   return (
-    <TouchableOpacity style={styles.cardContainer} onPress={() => navigation.navigate('DetailLelang', item)}>
-      <Image source={{ uri: item.images[0] }} style={styles.image} resizeMode="cover" />
+    <TouchableOpacity
+      style={styles.cardContainer}
+      onPress={() => navigation.navigate("DetailLelang", {id: item.id})}
+    >
+      <Image
+        source={{ uri: item.images[0] }}
+        style={styles.image}
+        resizeMode="cover"
+      />
       <View style={styles.contentContainer}>
         <Text style={typography.label3}>{item.title}</Text>
         <NumericFormat
@@ -36,7 +42,7 @@ const ItemCard: React.FC<ItemCardProps> = ({item}) => {
           prefix={"Rp "}
           thousandSeparator="."
           decimalSeparator=","
-          renderText={(val) => <Text style={[typography.label1,styles.price]}>{val}</Text>}
+          renderText={(val) => <Text style={styles.price}>{val}</Text>}
         />
         <View
           style={{
@@ -45,8 +51,10 @@ const ItemCard: React.FC<ItemCardProps> = ({item}) => {
             justifyContent: "space-between",
           }}
         >
-          <Text style={[typography.paragraph4, styles.infoText]}>{item.bidder.length} Bidder</Text>
-          <Text style={[typography.paragraph4, styles.infoText]}>{moment(item.auctionEnd).fromNow()}</Text>
+          <Text style={styles.infoText}>{item.bidder.length} Bidder</Text>
+          <Text style={styles.infoText}>
+            {moment(item.auctionEnd).fromNow()}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -62,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: size.s,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: colors.grey.light
+    borderColor: colors.grey.light,
   },
   image: {
     height: ITEM_WIDTH,
@@ -75,9 +83,11 @@ const styles = StyleSheet.create({
     marginTop: size.s,
     marginBottom: size.m,
     color: colors.warning,
+    ...typography.label1,
   },
   infoText: {
     color: colors.textSecondary,
+    ...typography.paragraph4,
   },
 });
 

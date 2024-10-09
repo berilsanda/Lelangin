@@ -110,12 +110,8 @@ export default function UserDetail({ navigation, route: { params } }: Props) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={{ ...typography.paragraph4, color: colors.textSecondary }}>
-          Langkah 2 dari 2
-        </Text>
-        <Text style={{ ...typography.heading2, marginBottom: size.xl }}>
-          Data Pengguna
-        </Text>
+        <Text style={styles.subtitle}>Langkah 2 dari 2</Text>
+        <Text style={styles.title}>Data Pengguna</Text>
         <View>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -220,5 +216,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryContainer,
     borderRadius: 50,
     padding: 4,
+  },
+  title: {
+    ...typography.heading2,
+    marginBottom: size.xl,
+  },
+  subtitle: {
+    ...typography.paragraph4,
+    color: colors.textSecondary,
   },
 });

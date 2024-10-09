@@ -55,7 +55,7 @@ export default function SplashScreen({ navigation }: Props) {
         resizeMode="cover"
         source={require("assets/splash.png")}
       />
-      <Text style={[typography.paragraph3, styles.versionText]}>Ver 1.0.0</Text>
+      <Text style={styles.versionText}>Ver 1.0.0</Text>
     </View>
   );
 }
@@ -69,5 +69,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     zIndex: 99,
     color: colors.textSecondary,
+    ...typography.paragraph3
   },
 });

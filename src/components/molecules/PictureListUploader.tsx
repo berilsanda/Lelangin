@@ -61,7 +61,13 @@ const PictureListUploader: React.FC<PictureListUploaderProps> = ({
           activeOpacity={0.8}
           onPress={() => deletePicture(index)}
         >
-          <Text style={{ ...typography.paragraph3, color: colors.surface, textAlign: "center" }}>
+          <Text
+            style={{
+              ...typography.paragraph3,
+              color: colors.surface,
+              textAlign: "center",
+            }}
+          >
             Hapus
           </Text>
         </TouchableOpacity>
@@ -71,7 +77,9 @@ const PictureListUploader: React.FC<PictureListUploaderProps> = ({
 
   return (
     <View style={{ marginBottom: size.l }}>
-      <Text style={{ ...typography.paragraph3, marginBottom: size.m }}>Foto Barang</Text>
+      <Text style={{ ...typography.paragraph3, marginBottom: size.m }}>
+        Foto Barang
+      </Text>
       <ScrollView horizontal>
         {pictureList.length > 0
           ? pictureList.map((item, index) => {
@@ -92,7 +100,7 @@ const PictureListUploader: React.FC<PictureListUploaderProps> = ({
           </TouchableOpacity>
         )}
       </ScrollView>
-      {error ? <Text style={[typography.paragraph3, styles.errorText]}>{error}</Text> : null}
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
 };
@@ -124,8 +132,9 @@ const styles = StyleSheet.create({
     padding: 36,
   },
   errorText: {
+    marginTop: size.s,
     color: colors.warning,
-    marginTop: size.sm,
+    ...typography.paragraph3,
   },
 });
 

@@ -1,12 +1,13 @@
 import * as firebase from "firebase/app";
 import {
+  arrayUnion,
   collection,
   doc,
   DocumentData,
   getDoc,
-  getDocs,
   getFirestore,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import {
@@ -71,6 +72,8 @@ export async function UserRegister(email: string, password: string) {
 export const database = getFirestore(app);
 
 export const users = collection(database, "user");
+export const products = collection(database, "products");
+export const bidder = collection(database, "bidder");
 
 export async function createUser(body: any) {
   try {
@@ -98,8 +101,29 @@ export async function getUser(uid: string): Promise<DocumentData | null> {
 
 export async function addProducts(body: any) {
   try {
-
     await setDoc(doc(database, "products", body.id), body);
+  } catch (error: any) {
+    Alert.alert("Kesalahan", error.message);
+  }
+}
+
+interface AddBidProps {
+  id: string;
+  currentBid: number;
+  userId: string;
+}
+
+export async function addBid({ id, currentBid, userId }: AddBidProps) {
+  try {
+    const bidId = uuid.v4().toString();
+    await setDoc(doc(database, "bidder", bidId), {
+      auctionId: id,
+      bidValue: currentBid,
+      createdAt: new Date(),
+      userId: userId,
+    });
+
+    await updateDoc(doc(database, "products", id), { currentBid, bidder: arrayUnion(bidId) });
   } catch (error: any) {
     Alert.alert("Kesalahan", error.message);
   }
