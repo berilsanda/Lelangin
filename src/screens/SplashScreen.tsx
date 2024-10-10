@@ -9,6 +9,7 @@ import { setUser } from "src/reduxs/reducer/persistReducer";
 import { onAuthStateChanged } from "firebase/auth";
 import _ from 'lodash';
 import serializeTime from "src/utils/serializeTime";
+import { APP_VER } from "@env";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -32,9 +33,9 @@ export default function SplashScreen({ navigation }: Props) {
           photoURL: user.photoURL,
         };
 
-        currentUser.createdAt = serializeTime(currentUser.createdAt);
-        currentUser.lastLogin = serializeTime(currentUser.lastLogin);
-        currentUser.updateAt = serializeTime(currentUser.updateAt);
+        currentUser.createdAt = serializeTime(currentUser.createdAt)?.toString();
+        currentUser.lastLogin = serializeTime(currentUser.lastLogin)?.toString();
+        currentUser.updateAt = serializeTime(currentUser.updateAt)?.toString();
 
         if (!_.isEqual(userData, currentUser)) {
           dispatch(setUser(currentUser));
@@ -55,7 +56,7 @@ export default function SplashScreen({ navigation }: Props) {
         resizeMode="cover"
         source={require("assets/splash.png")}
       />
-      <Text style={styles.versionText}>Ver 1.0.0</Text>
+      <Text style={styles.versionText}>Ver {APP_VER}</Text>
     </View>
   );
 }

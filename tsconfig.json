@@ -33,7 +33,8 @@
       "screens/*": ["./src/screens/*"],
       "services/*": ["./src/services/*"],
       "utils/*": ["./src/utils/*"]
-    }
+    },
+    "typeRoots": ["./types"]
   },
   "extends": "expo/tsconfig.base"
 }

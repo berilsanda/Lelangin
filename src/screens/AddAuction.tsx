@@ -17,7 +17,7 @@ import PictureListUploader from "src/components/molecules/PictureListUploader";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { addProducts } from "src/services/firebase";
-import { STORAGE_BUCKET } from "src/env";
+import { STORAGE_BUCKET } from "@env";
 import uploadImageAsync from "src/services/uploadImageAsync";
 import { StackParamList } from "src/navigations/MainNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";

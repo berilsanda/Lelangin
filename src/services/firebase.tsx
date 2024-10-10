@@ -24,7 +24,7 @@ import {
   MESSAGE_SENDER_ID,
   PROJECT_ID,
   STORAGE_BUCKET,
-} from "src/env";
+} from "@env";
 import uuid from "react-native-uuid";
 import { Alert } from "react-native";
 
